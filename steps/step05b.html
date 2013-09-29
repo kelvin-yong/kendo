@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../kendo/styles/kendo.mobile.all.min.css">
+    <script type="text/javascript" src="../kendo/js/jquery.min.js"> </script>
+    <script type="text/javascript" src="../kendo/js/kendo.mobile.min.js"> </script>
+    <title>SMART Logger</title>
+</head>
+
+<body>
+<div data-role="layout" data-id="main-layout">
+    <div data-role="header">
+        <div data-role="navbar">
+            <a href="#home-view" class="backbutton nav-button" data-align="left" data-role="backbutton" data-transition="slide:left reverse">Home</a>
+
+            <span data-role="view-title"></span>
+            <a class="savebutton nav-button" data-align="right" data-role="button" data-click="controller.saveTapped">Save</a>
+        </div>
+    </div>
+    <div data-role="footer">
+        <div data-role="tabstrip">
+            <a data-icon="home" onclick="controller.homeTapped();">Home</a>
+            <a data-icon="settings" href="../settings-view.html">Settings</a>
+        </div>
+    </div>
+</div>
+
+<!-- view: home -->
+<!-- what's new: data-stretch, and a new background, as well as some a form -->
+<div id="home-view" data-role="view" data-title="SMARTLogger" data-layout="main-layout" data-init="controller.onInit" data-before-show="controller.viewWillAppear" data-stretch="true">
+    <div style="background: url(../images/pattern1.png) repeat 0 0; padding: 1px 0px;">
+        <h2>Call Records</h2>
+
+        <ul data-role="listview" data-style="inset" data-type="group" style="display: block; margin: -1em 2em 0em;">
+            <li>
+                Date Range
+                <ul>
+                    <li><label>Start <input type="date"/></label></li>
+                    <li><label>End <input type="date"/></label></li>
+
+                </ul>
+            </li>
+            <li>Call Type
+                <ul>
+                    <li><label><input name="calltype" value="in" type="radio" checked="checked"/>Incoming</label></li>
+                    <li><label><input name="calltype" value="out" type="radio"/>Outgoing</label></li>
+                    <li><label><input name="calltype" value="both" type="radio"/>Both</label></li>
+                </ul>
+            </li>
+
+        </ul>
+
+        <a id="search-btn" data-click="controller.btnClick" data-role="button" data-icon="search" style="display: block; margin: 1em 2em; text-align: center; background-color: green;">Search</a>
+        <a id="reset-btn" data-click="controller.btnClick" data-role="button" style="display: block; margin: 1em 2em; text-align: center; background-color: gray">Reset</a>
+    </div>
+</div>
+
+<!-- view: result-->
+<div id="result-view" data-role="view" data-title="Results" data-layout="main-layout" data-before-show="controller.viewWillAppear" >
+    <ul data-role="listview" data-style="inset" data-source="dataSource" data-template="result-template"></ul>
+    <!-- TODO: 3. Add in an action sheet here -->
+</div>
+
+<!-- view: modal view -->
+<div data-role="modalview" id="save-modal" style="width: 100px; height: 100px;">
+    <span style="text-align: center">Settings Saved</span>
+</div>
+
+
+</body>
+
+<!-- TODO: 1. Add in event handler for play button methods-->
+<script id="result-template" type="text/x-kendo-template">
+    <a style="float:right;" data-role="button" data-icon="play" data-playerid="#=id#"></a>
+
+    # var formattedDuration = (duration - (duration % 60))/60 + ":" + (duration % 60); #
+    # var formattedStart = (new Date(start)).toString(); #
+
+    # if (direction) { #
+    <img src="../images/arrow-in.png" style="position:relative; top:2px" height="18">
+    # } else{ #
+    <img src="../images/arrow-out.png" style="position:relative; top:2px" height="18">
+    #}#
+    #= party # <span style="color:blue">#= formattedDuration #</span>
+    <br>
+    <span style="color:gray; font-size:0.75em">#= formattedStart #</span>
+</script>
+
+<script type="text/javascript">
+    var app = new kendo.mobile.Application(document.body);
+
+    var dataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                // type of request to make ("POST", "GET", "PUT" or "DELETE"). Default is "GET"
+                type: "GET",
+
+                // the remote service url
+                url: "phonelog.json",
+
+                // see http://api.jquery.com/jQuery.ajax/ for options: text, json, jsonp etc
+                dataType: "json"
+
+            }
+        },
+
+        // events
+        change: function(e) {
+            var items = this.view();
+            console.log('%d items read', items.length);
+
+            for (var i = 0, len = items.length; i < len; i++) {
+                var item = items[i];
+                console.log(item);
+            }
+        },
+
+        error: function(e) {
+            console.log("Cannot read. " + e.status);
+        },
+
+        requestStart: function(e) {
+            console.log("Request started");
+        },
+
+        requestEnd: function(e) {
+            console.log("Request ended");
+        }
+    });
+
+    var controller = {inResultView: false};
+
+    controller.saveTapped = function (e){
+        var modalElement = $("#save-modal").data("kendoMobileModalView");
+        console.log("Saved!");
+        modalElement.open();
+        setTimeout(function(){modalElement.close()}, 1000);
+    };
+
+    controller.onInit = function(e) {
+        console.log("home view inited");
+        e.view.header.find(".savebutton").hide();
+        e.view.header.find(".backbutton").hide();
+    };
+
+    controller.btnClick = function (e) {
+        var buttonId = this.element.prop("id");
+        console.log(buttonId + " was clicked!");
+        if (buttonId=="search-btn") {
+            app.navigate("#result-view", "slide");
+        }
+    };
+
+    // TODO: 2. Add in controller methods to handle play button tap
+
+    controller.homeTapped = function() {
+        if (controller.inResultView) {
+            app.navigate("#result-view");
+        } else {
+            app.navigate("#home-view");
+        }
+    };
+
+    controller.viewWillAppear = function (e) {
+        var viewId = this.element.prop("id");
+        console.log(viewId + ": viewWillAppear");
+        var appView = app.view();
+        if (!appView) {
+            return;
+        }
+        switch (viewId) {
+            case "home-view":
+                appView.header.find(".savebutton").hide();
+                appView.header.find(".backbutton").hide();
+                controller.inResultView = false;
+                break;
+            case "result-view":
+                appView.header.find(".savebutton").hide();
+                appView.header.find(".backbutton").show();
+                controller.inResultView = true;
+                break;
+            case "settings-view":
+                appView.header.find(".savebutton").show();
+                appView.header.find(".backbutton").hide();
+                break;
+            default: console.error(viewId + ": not handled in viewWillAppear"); break;
+        }
+    };
+
+</script>
+
+</html>
+
+<!--
+ Current: We now have a list widget linked to a remote data source and template
+ Goal: Make the play button display a action sheet.
+ Complete: Step 5c
+->

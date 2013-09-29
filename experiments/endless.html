@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <!--
+    <link rel="stylesheet" type="text/css" href="../kendo/styles/kendo.mobile.all.min.css">
+    <script type="text/javascript" src="../kendo/js/jquery.min.js"> </script>
+    <script type="text/javascript" src="../kendo/js/kendo.mobile.min.js"> </script>
+ -->
+
+    <link href="http://cdn.kendostatic.com/2012.3.1114/styles/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../kendo/js/jquery.min.js"> </script>
+    <script src="http://cdn.kendostatic.com/2012.3.1114/js/kendo.all.min.js"></script>
+
+   <meta charset=utf-8 />
+    <title>Endless Scrolling</title>
+</head>
+
+<body>
+
+<div data-role="view" data-layout="default" data-init="viewInit">
+    <ul id="listView"></ul>
+</div>
+
+<section data-role="layout" data-id="default">
+    <header data-role="header">
+        <div data-role="navbar">Endless Scrolling</div>
+    </header>
+</section>
+
+<script type="text/javascript">
+
+    var useEndlessScrolling = true;
+
+    var datasourceOptions = {data: getData()};
+    if (useEndlessScrolling) {
+        datasourceOptions.pageSize = 77;
+    }
+
+    function getData() {
+        var data = [], idx = 0;
+
+        for (; idx < 1000; idx++) {
+            data.push({
+                name: "Name" + idx
+            });
+        }
+
+        return data;
+    }
+
+    var dataSource = new kendo.data.DataSource(datasourceOptions);
+
+    function viewInit() {
+        $("#listView").kendoMobileListView({
+            dataSource: dataSource,
+            template: "#: name #",
+            endlessScroll: useEndlessScrolling,
+            scrollThreshold: 100
+        });
+    }
+
+    var app = new kendo.mobile.Application(document.body);
+</script>
+</body>
+</html>

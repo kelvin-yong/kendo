@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../kendo/styles/kendo.mobile.all.min.css">
+    <script type="text/javascript" src="../kendo/js/jquery.min.js"> </script>
+    <script type="text/javascript" src="kendo/js/kendo.mobile.js"> </script>
+    <title>SMART Logger</title>
+</head>
+
+<body>
+<div data-role="layout" data-id="main-layout">
+    <div data-role="header">
+        <div data-role="navbar" id="navbar">
+            <a id="backbutton" href="#home" class="nav-button" data-align="left" data-role="button" data-transition="slide:left reverse">Home</a>
+            <span data-role="view-title"></span>
+        </div>
+    </div>
+    <div data-role="footer">
+        <div data-role="tabstrip" data-select="onSelect">
+            <a data-icon="home" href="#home">Home</a>
+            <a data-icon="settings" href="#settings">Settings</a>
+        </div>
+    </div>
+</div>
+
+<!-- view: home -->
+<div id="home" data-role="view" data-title="SMARTLogger" data-layout="main-layout">
+    SMARTLogger Home Screen<br>
+    <a href="#results" data-role="button" data-transition="slide">Search</a>
+</div>
+
+<!-- view: results -->
+<div id="results" data-role="view" data-title="Results" data-layout="main-layout">
+    Results<br>
+    <a href="#home" data-role="button" data-transition="slide:left reverse">Back</a>
+</div>
+
+<!-- view: settings -->
+<div id="settings" data-role="view" data-title="Settings" data-layout="main-layout">
+    This is where the settings will be.
+</div>
+
+</body>
+
+<script type="text/javascript">
+    var app  = new kendo.mobile.Application(document.body, {initial:"settings"});
+    $(document).ready(function() {
+        //
+    });
+
+    function onSelect(e) {
+        console.log("Previous: " + this.currentItem().text()); //previous selected
+        console.log("Newly: " + e.item.text()); //newly selected
+    }
+
+    setTimeout(function(){
+//        var settingsDiv = document.getElementById('settings');
+//        settingsDiv.setAttribute('data-title', 'Tiger Roar');
+    }, 2000);
+</script>
+
+</html>
+
+<!--
+ Current: Looks like an mobile app now
+ Goal: Make the settings page look better
+ Complete: step02b
+-->

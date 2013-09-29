@@ -1,0 +1,67 @@
+<!-- view: settings -->
+<div id="settings-view" data-role="view" data-title="Settings" data-layout="main-layout" data-before-show="controller.viewWillAppear">
+    <form>
+        <!-- user details -->
+        <ul data-role="listview" data-style="inset">
+            <li>
+                <label>Username</label>
+                <input type="text" placeholder="username"/>
+            </li>
+            <li>
+                <label>Password</label>
+                <input type="password" placeholder="Password"/>
+            </li>
+            <li>
+                <label>Email</label>
+                <input type="email" placeholder="Email address"/>
+            </li>
+            <li>
+                <label>Date of Birth</label>
+                <input type="date"/>
+            </li>
+            <li>
+                <label>Membership</label>
+                <select>
+                    <option value="trial">Trial</option>
+                    <option value="standard">Standard</option>
+                    <option value="premium">Premium</option>
+                </select>
+            </li>
+        </ul>
+
+        <!-- server and access details -->
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>Server Settings
+                <ul>
+                    <li>
+                        <label>
+                            Host
+                            <input type="url" placeholder="http://servername"/>
+                        </label>
+
+                    </li>
+                    <li>
+                        <label>
+                            Port
+                            <input type="number" min="4000">
+                        </label>
+                    </li>
+                </ul>
+            </li>
+            <li>Access Type
+                <ul>
+                    <li>
+                        <label><input name="access" value="wifi" type="radio" checked="checked"/>Wi-Fi</label>
+                    </li>
+                    <li>
+                        <label><input name="access" value="3g" type="radio"/>4G</label>
+                    </li>
+                    <li>
+                        <label><input name="access" value="4g" type="radio"/>3G and below</label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </form>
+</div>
+
