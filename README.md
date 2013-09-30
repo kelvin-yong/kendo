@@ -18,12 +18,12 @@ This application takes the developer through the process of building a mobile we
   (and don't forget to add `node.exe` to  your executable path)
 
 ## Commits / Tutorial Outline
+You can clone the project by running `git clone https://github.com/kelvin-yong/kendo.git`  
+This will create a folder `kendo` and download all code into that folder.
 
-You can check out any point of the tutorial using
-    git checkout step-?
+You can check out any point of the tutorial using `git checkout -f step???`. For example, to check out step04b, run `git checkout -f step04b`
 
-To see the changes which between any two lessons use the git diff command.
-    git diff step-?..step-?
+To see the changes which between any two lessons use the `git diff` command. For example` git diff step04a..step04b`
 
 ## Step 1: Basics
 Using Kendo UI Mobile, you will start to create a web page that looks an feel like a native mobile app. The app will be a tab application common iOS, with a navigation bar on the header and 2 tabs to switch between 2 views.
