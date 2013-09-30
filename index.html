@@ -1,9 +1,56 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <title>Title goes here</title>
+    <link rel="stylesheet" type="text/css" href="kendo/styles/kendo.mobile.all.min.css">
+    <script type="text/javascript" src="kendo/js/jquery.min.js"> </script>
+    <script type="text/javascript" src="kendo/js/kendo.mobile.min.js"> </script>
+    <title>SMART Logger</title>
 </head>
+
 <body>
+<div data-role="layout" data-id="main-layout">
+    <div data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+        </div>
+    </div>
+    <div data-role="footer">
+        <div data-role="tabstrip">
+            <a data-icon="home" href="#home">Home</a>
+            <a data-icon="settings" href="#settings">Settings</a>
+        </div>
+    </div>
+</div>
+
+<!-- view: home -->
+<div id="home" data-role="view" data-title="SMARTLogger" data-layout="main-layout">
+    SMARTLogger Home Screen
+</div>
+
+<!-- view: settings -->
+<div id="settings" data-role="view" data-title="Settings" data-layout="main-layout">
+    <!-- TODO: 1. create a form and place the form elements in an unordered list -->
+    <!--
+        The form elements are as follows -
+        Username:text
+        Password:password
+        Email:email
+        Date of Birth: date
+        Membership: select with 3 options
+    -->
+    This is where the settings will be.
+</div>
 
 </body>
+
+<script type="text/javascript">
+    var app = new kendo.mobile.Application(document.body, {initial:"settings"});
+</script>
+
 </html>
+
+<!--
+ Current: Looks like an mobile app now
+ Goal: Implement the settings page with a form
+ Complete: step02b
+-->
