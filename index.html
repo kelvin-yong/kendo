@@ -1,9 +1,41 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <title>Title goes here</title>
+    <link rel="stylesheet" type="text/css" href="kendo/styles/kendo.mobile.all.min.css">
+    <script type="text/javascript" src="kendo/js/jquery.min.js"> </script>
+    <script type="text/javascript" src="kendo/js/kendo.mobile.min.js"> </script>
+    <title>SMART Logger</title>
 </head>
+
 <body>
+    <!--
+        TODO: 1. Add in a navigation bar and tab strip with 2 icons.
+        Explain the href for tab strip link
+
+        TODO: 2. Display title in the navigation bar using data-role view-title
+    -->
+    <div data-role="layout" data-id="main-layout">
+        <div data-role="header">Header</div>
+        <div data-role="footer">Footer</div>
+    </div>
+
+    <!-- TODO: 3. Change the data-title to SMARTLogger -->
+    <div id="home" data-role="view" data-title="SmartLogger" data-layout="main-layout">
+        SMARTLogger Home Screen
+    </div>
+
+    <!-- TODO: 4. Add a settings page holder and make it default -->
 
 </body>
+
+<script type="text/javascript">
+    var app = new kendo.mobile.Application(document.body);
+</script>
+
 </html>
+
+<!--
+ Current: Layout and view created.
+ Goal: Improve on the mobile look
+ Complete: step01d
+-->
