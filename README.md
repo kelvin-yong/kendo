@@ -163,7 +163,8 @@ In this step, we will be using datasource and templates. We will also touch on s
 - The play button and the action sheet now works.
 - The file starts with transport.url modified.
 - Type `dataSource.read({d:0})`, `dataSource.read({d:1})` or `dataSource.read()` in your JavaScript console and see what happens
-- You now need to make your search dynamic, either using plain JavaScript (perhaps with jQuery), or MVVM.
+- You now need to make your search dynamic, either using plain JavaScript (perhaps with jQuery), or MVVM. See http://jsfiddle.net/YtYrC/15/light/
+
 - This is left as an exercise for you. Have fun!
 
 
@@ -185,6 +186,14 @@ In this step, we will be using datasource and templates. We will also touch on s
 - Author: Kelvin Yong
 - Version: 0.1.0
 - 30 Sep 2013
+
+## Thanks
+To those who attended the training, thanks!
+- Alan
+- Chee Hong
+- Lara
+- Susulay
+
 
 [7 Zip]: http://www.7-zip.org/
 [angular-seed]: https://github.com/angular/angular-seed
