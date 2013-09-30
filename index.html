@@ -1,9 +1,119 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <title>Title goes here</title>
+    <link rel="stylesheet" type="text/css" href="kendo/styles/kendo.mobile.all.min.css">
+    <script type="text/javascript" src="kendo/js/jquery.min.js"> </script>
+    <script type="text/javascript" src="kendo/js/kendo.mobile.min.js"> </script>
+    <title>SMART Logger</title>
 </head>
+
 <body>
+<div data-role="layout" data-id="main-layout">
+    <div data-role="header">
+        <div data-role="navbar">
+            <a href="#home-view" class="backbutton nav-button" data-align="left" data-role="backbutton" data-transition="slide:left reverse">Home</a>
+
+            <span data-role="view-title"></span>
+            <a class="savebutton nav-button" data-align="right" data-role="button" data-click="controller.saveTapped">Save</a>
+        </div>
+    </div>
+    <div data-role="footer">
+        <div data-role="tabstrip">
+            <a data-icon="home" onclick="controller.homeTapped();">Home</a>
+            <a data-icon="settings" href="settings-view.html">Settings</a>
+        </div>
+    </div>
+</div>
+
+<!-- view: home -->
+<div id="home-view" data-role="view" data-title="SMARTLogger" data-layout="main-layout" data-init="controller.onInit" data-before-show="controller.viewWillAppear">
+    SMARTLogger Home Screen
+    <a id="search-btn" data-click="controller.btnClick" data-role="button" data-icon="search" style="display: block; margin: 1em 2em; text-align: center; background-color: green;">Search</a>
+    <a id="reset-btn" data-click="controller.btnClick" data-role="button" style="display: block; margin: 1em 2em; text-align: center; background-color: black">Reset</a>
+</div>
+
+<!-- view: result-->
+<div id="result-view" data-role="view" data-title="Results" data-layout="main-layout" data-before-show="controller.viewWillAppear" >
+    <ol>
+        <li>First result</li>
+        <li>Second result</li>
+        <li>Third result</li>
+    </ol>
+</div>
+
+<!-- view: modal view -->
+<div data-role="modalview" id="save-modal" style="width: 100px; height: 100px;">
+    <span style="text-align: center">Settings Saved</span>
+</div>
 
 </body>
+
+<script type="text/javascript">
+    var app = new kendo.mobile.Application(document.body);
+
+    var controller = {inResultView: false};
+
+    controller.saveTapped = function (e){
+        var modalElement = $("#save-modal").data("kendoMobileModalView");
+        console.log("Saved!");
+        modalElement.open();
+        setTimeout(function(){modalElement.close()}, 1000);
+    };
+
+    controller.onInit = function(e) {
+        console.log("home view inited");
+        e.view.header.find(".savebutton").hide();
+        e.view.header.find(".backbutton").hide();
+    };
+
+    controller.btnClick = function (e) {
+        var buttonId = this.element.prop("id");
+        console.log(buttonId + " was clicked!");
+        if (buttonId=="search-btn") {
+            app.navigate("#result-view", "slide");
+        }
+    };
+
+    controller.homeTapped = function() {
+        if (controller.inResultView) {
+            app.navigate("#result-view");
+        } else {
+            app.navigate("#home-view");
+        }
+    };
+
+    controller.viewWillAppear = function (e) {
+        var viewId = this.element.prop("id");
+        console.log(viewId + ": viewWillAppear");
+        var appView = app.view();
+        if (!appView) {
+            return;
+        }
+        switch (viewId) {
+            case "home-view":
+                appView.header.find(".savebutton").hide();
+                appView.header.find(".backbutton").hide();
+                controller.inResultView = false;
+                break;
+            case "result-view":
+                appView.header.find(".savebutton").hide();
+                appView.header.find(".backbutton").show();
+                controller.inResultView = true;
+                break;
+            case "settings-view":
+                appView.header.find(".savebutton").show();
+                appView.header.find(".backbutton").hide();
+                break;
+            default: console.error(viewId + ": not handled in viewWillAppear"); break;
+        }
+    };
+
+</script>
+
 </html>
+
+<!--
+ Current: The settings view is now a remote view
+ Goal: Implment the home view
+ Complete: Step 4d
+->
