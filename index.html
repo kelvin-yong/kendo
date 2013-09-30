@@ -1,9 +1,130 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <title>Title goes here</title>
+    <link rel="stylesheet" type="text/css" href="kendo/styles/kendo.mobile.all.min.css">
+    <script type="text/javascript" src="kendo/js/jquery.min.js"> </script>
+    <script type="text/javascript" src="kendo/js/kendo.mobile.min.js"> </script>
+    <title>SMART Logger</title>
 </head>
+
 <body>
+<div data-role="layout" data-id="main-layout">
+    <div data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+            <!-- TODO: B1. Add in a class for the button -->
+            <a id="savebutton" class="nav-button" data-align="right" data-role="button" data-click="controller.saveTapped">Save</a>
+        </div>
+    </div>
+    <div data-role="footer">
+        <div data-role="tabstrip">
+            <a data-icon="home" href="#home">Home</a>
+            <a data-icon="settings" href="#settings">Settings</a>
+        </div>
+    </div>
+</div>
+<!-- TODO:A1 add another layout: settings-layout -->
+
+<!-- view: modal view -->
+<div data-role="modalview" id="save-modal" style="width: 120px; height: 60px;">
+    <div style="text-align: center; padding: 10px">Settings Saved</div>
+</div>
+
+<!-- view: home -->
+<!-- TODO: B3. Add data-before-show to home view-->
+<div id="home" data-role="view" data-title="SMARTLogger" data-layout="main-layout">
+    SMARTLogger Home Screen
+</div>
+
+<!-- TODO:A2 point the settings view to its layout -->
+<!-- TODO: B2. Add in a data-init to settings view, and data-before-show -->
+<!-- view: settings -->
+<div id="settings" data-role="view" data-title="Settings" data-layout="main-layout">
+    <form>
+        <!-- user details -->
+        <ul data-role="listview" data-style="inset">
+            <li>
+                <label>Username</label>
+                <input type="text" placeholder="username"/>
+            </li>
+            <li>
+                <label>Password</label>
+                <input type="password" placeholder="Password"/>
+            </li>
+            <li>
+                <label>Email</label>
+                <input type="email" placeholder="Email address"/>
+            </li>
+            <li>
+                <label>Date of Birth</label>
+                <input type="date"/>
+            </li>
+            <li>
+                <label>Membership</label>
+                <select>
+                    <option value="trial">Trial</option>
+                    <option value="standard">Standard</option>
+                    <option value="premium">Premium</option>
+                </select>
+            </li>
+        </ul>
+
+        <!-- server and access details -->
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>Server Settings
+                <ul>
+                    <li>
+                        <label>
+                            Host
+                            <input type="url" placeholder="http://servername"/>
+                        </label>
+
+                    </li>
+                    <li>
+                        <label>
+                            Port
+                            <input type="number" min="4000">
+                        </label>
+                    </li>
+                </ul>
+            </li>
+            <li>Access Type
+                <ul>
+                    <li>
+                        <label><input name="access" value="wifi" type="radio" checked="checked"/>Wi-Fi</label>
+                    </li>
+                    <li>
+                        <label><input name="access" value="3g" type="radio"/>4G</label>
+                    </li>
+                    <li>
+                        <label><input name="access" value="4g" type="radio"/>3G and below</label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </form>
+</div>
 
 </body>
+
+<script type="text/javascript">
+    var app = new kendo.mobile.Application(document.body, {initial:"settings"});
+
+    var controller = {};
+    controller.saveTapped = function (e){
+        var modalElement = $("#save-modal").data("kendoMobileModalView");
+        console.log("Saved!");
+        modalElement.open();
+        setTimeout(function(){modalElement.close()}, 1000);
+    };
+    <!-- TODO: B4. Add in additional controller methods -->
+    <!-- TODO: B5. try using $ directly to manipulate the save button, change the app initial view -->
+</script>
+
 </html>
+
+<!--
+ Current: The save button appears on home screen, that's not right
+ Goal: Make the save button appear only when it's on the home screen
+ Complete: step03b/c
+-->
