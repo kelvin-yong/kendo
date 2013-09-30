@@ -1,9 +1,84 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <title>Title goes here</title>
+    <link rel="stylesheet" type="text/css" href="kendo/styles/kendo.mobile.all.min.css">
+    <script type="text/javascript" src="kendo/js/jquery.min.js"> </script>
+    <script type="text/javascript" src="kendo/js/kendo.mobile.min.js"> </script>
+    <title>SMART Logger</title>
 </head>
+
 <body>
+<div data-role="layout" data-id="main-layout">
+    <div data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+        </div>
+    </div>
+    <div data-role="footer">
+        <div data-role="tabstrip">
+            <a data-icon="home" href="#home">Home</a>
+            <a data-icon="settings" href="#settings">Settings</a>
+        </div>
+    </div>
+</div>
+
+<!-- view: home -->
+<div id="home" data-role="view" data-title="SMARTLogger" data-layout="main-layout">
+    SMARTLogger Home Screen
+</div>
+
+<!-- view: settings -->
+<div id="settings" data-role="view" data-title="Settings" data-layout="main-layout">
+    <form>
+        <!-- user details -->
+        <ul data-role="listview" data-style="inset">
+            <li>
+                <label>Username</label>
+                <input type="text" placeholder="username"/>
+            </li>
+            <li>
+                <label>Password</label>
+                <input type="password" placeholder="Password"/>
+            </li>
+            <li>
+                <label>Email</label>
+                <input type="email" placeholder="Email address"/>
+            </li>
+            <li>
+                <label>Date of Birth</label>
+                <input type="date"/>
+            </li>
+            <li>
+                <label>Membership</label>
+                <select>
+                    <option value="trial">Trial</option>
+                    <option value="standard">Standard</option>
+                    <option value="premium">Premium</option>
+                </select>
+            </li>
+        </ul>
+
+        <!-- TODO: 1. another 2 sections: Server settings and access type. Use ul with data-type="group" -->
+        <!--
+            Server settings contains
+                host: url
+                port: number
+
+            Access type: radio buttons
+        -->
+    </form>
+</div>
 
 </body>
+
+<script type="text/javascript">
+    var app = new kendo.mobile.Application(document.body, {initial:"settings"});
+</script>
+
 </html>
+
+<!--
+ Current: Settings screen now has a one form
+ Goal: Make another form
+ Complete: step02c
+-->
